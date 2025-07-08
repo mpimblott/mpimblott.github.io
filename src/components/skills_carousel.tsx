@@ -4,8 +4,8 @@ import { AnimatePresence } from "framer-motion";
 
 interface SkillsCarouselProps {
   items: string[];
-  rotateDelayMS: number;
-  hoverDelayMS: number;
+  rotateDelayMS?: number;
+  hoverDelayMS?: number;
 }
 
 /**
@@ -13,7 +13,7 @@ interface SkillsCarouselProps {
  * @param props
  * @constructor
  */
-function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: SkillsCarouselProps) {
+function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100}: SkillsCarouselProps) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [hoverTimeoutId, setHoverTimeoutId] = useState<number | null>(null);
@@ -94,7 +94,7 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
       onMouseLeave={onLeave}
       onWheel={onWheel}
       animate={{width: "100%"}}
-      transition={{type: "spring", stiffness: 10, damping: 40}}
+      transition={{type: "spring", stiffness: 10, damping: 60}}
       style={{cursor: "pointer"}}
     >
       <AnimatePresence mode="wait">
