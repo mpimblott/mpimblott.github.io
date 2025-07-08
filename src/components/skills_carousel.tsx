@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "framer-motion";
 
@@ -21,11 +21,20 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
   const [rotateTimeoutId, setRotateTimeoutId] = useState<number | null>(null);
   const [rotateTimeoutStarted, setRotateTimeoutStarted] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState<number | undefined>(rotateDelayMS);
+  const containerRef = useRef(null);
+
+  // Prevent default scrolling when mousing over the carousel
+  useEffect(() => {
+    const el: HTMLElement | null = containerRef.current as HTMLElement | null;
+    if (!el) return;
+    const handler = (e: WheelEvent) => e.preventDefault();
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
+  }, [containerRef]);
 
   useEffect(() => {
     // Rotate the index
     if (hovered) return;
-    console.log('starting with remaining time', remainingTime);
 
     // create the timeout for rotation
     const timeoutId = setTimeout(() => {
@@ -65,7 +74,6 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
   // Handle scroll wheel to change index
   function onWheel(e: React.WheelEvent) {
     if (!hovered) return;
-    e.preventDefault();
     if (e.deltaY > 0) {
       setIndex((prev) => (prev + 1) % items.length);
     } else if (e.deltaY < 0) {
@@ -74,6 +82,7 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
   }
 
   return (<motion.div
+      ref = {containerRef}
       className="relative w-full h-30 overflow-hidden flex items-center justify-center"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
@@ -99,7 +108,7 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
         </motion.div>
       </AnimatePresence>
       {/* Pips at the bottom */}
-      {hovered && (<div className="absolute bottom-2 left-0 w-full flex justify-center gap-2">
+      {hovered && (<div className="absolute bottom-2 left-0 w-full flex justify-center gap-1">
           {items.map((_, i) => (<span
               key={i}
               className={`inline-block w-6 h-3 rounded-full transition-all duration-200 ${i === index ? 'bg-blue-500' +
