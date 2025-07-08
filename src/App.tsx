@@ -1,11 +1,12 @@
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+
 function App() {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 text-white">
       <h1 className="text-5xl font-bold mb-4">Matt</h1>
-      <div className="flex space-x-4">
-        <a href="#" className="text-blue-400 hover:text-blue-300">GitHub</a>
-        <a href="#" className="text-blue-400 hover:text-blue-300">Twitter</a>
-        <a href="#" className="text-blue-400 hover:text-blue-300">LinkedIn</a>
+      <div className="flex flex-row gap-x-80">
+        <a href="#" className="hover:text-blue-300"><FaGithub size={20} /></a>
+        <a href="#" className="hover:text-blue-300"><FaLinkedin size={20} /></a>
       </div>
     </div>
   );
