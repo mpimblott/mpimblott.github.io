@@ -12,41 +12,68 @@ interface SkillsCarouselProps {
  * @param props
  * @constructor
  */
-function SkillsCarousel({items = [], displayTime = 2000}: SkillsCarouselProps) {
+function SkillsCarousel({ items = [], displayTime = 2500 }: SkillsCarouselProps) {
   const [index, setIndex] = useState(0);
-  
-  console.log("carousel mounted")
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
+    if (hovered) return;
     const timeout = setTimeout(() => {
       setIndex((prev) => (prev + 1) % items.length);
-      console.log(index);
-    }, displayTime + 1000); // + animation duration
-
+    }, displayTime + 1000);
     return () => clearTimeout(timeout);
-  }, [index, displayTime, items.length]);
+  }, [index, displayTime, items.length, hovered]);
 
   return (
-    <div className="relative w-full h-40 overflow-hidden flex items-center justify-center">
-      <AnimatePresence mode="wait">
+    <motion.div
+      className="relative w-full h-40 overflow-hidden flex items-center justify-center"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      animate={{
+        height: 160,
+        width: "100%",
+      }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      style={{ cursor: "pointer" }}
+    >
+      {hovered ? (
         <motion.div
-          key={index}
-          className="absolute text-2xl font-bold"
-          initial={{ x: "-100%", opacity: 0 }}
-          animate={{ x: "0%", opacity: 1 }}
-          exit={{ x: "100%", opacity: 0 }}
-          transition={{
-            x: {
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            },
-          }}
+          className="grid grid-cols-3 gap-4 w-full p-6"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.3 }}
         >
-          {items[index]}
+          {items.map((item, i) => (
+            <div
+              key={i}
+              className="text-xl font-semibold text-center p-2"
+            >
+              {item}
+            </div>
+          ))}
         </motion.div>
-      </AnimatePresence>
-    </div>
+      ) : (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            className="absolute text-2xl font-bold"
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: "0%", opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{
+              x: {
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              },
+            }}
+          >
+            {items[index]}
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </motion.div>
   );
 }
 
