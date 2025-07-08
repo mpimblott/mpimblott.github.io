@@ -4,7 +4,8 @@ import { AnimatePresence } from "framer-motion";
 
 interface SkillsCarouselProps {
   items: string[];
-  displayTime?: number;
+  rotateDelayMS?: number;
+  hoverDelayMS?: number;
 }
 
 /**
@@ -12,69 +13,76 @@ interface SkillsCarouselProps {
  * @param props
  * @constructor
  */
-function SkillsCarousel({ items = [], displayTime = 2500 }: SkillsCarouselProps) {
+function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 200}: SkillsCarouselProps) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [hoverTimeout, setHoverTimeout] = useState<number | null>(null);
 
   useEffect(() => {
+    // Rotate the index
     if (hovered) return;
     const timeout = setTimeout(() => {
       setIndex((prev) => (prev + 1) % items.length);
-    }, displayTime + 1000);
+    }, rotateDelayMS + 1000);
     return () => clearTimeout(timeout);
-  }, [index, displayTime, items.length, hovered]);
+  }, [index, rotateDelayMS, items.length, hovered]);
 
-  return (
-    <motion.div
+  function onHover() {
+    const timeout = setTimeout(() => {
+      setHovered(true);
+    }, hoverDelayMS); // 500ms delay
+    setHoverTimeout(timeout);
+  }
+
+  function onLeave() {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+    }
+    setHovered(false);
+  }
+
+  return (<motion.div
       className="relative w-full h-40 overflow-hidden flex items-center justify-center"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
       animate={{
-        height: 160,
-        width: "100%",
+        height: 160, width: "100%",
       }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      style={{ cursor: "pointer" }}
+      transition={{type: "spring", stiffness: 300, damping: 30}}
+      style={{cursor: "pointer"}}
     >
-      {hovered ? (
+      {hovered ? (// When hovered show all the items
         <motion.div
           className="grid grid-cols-3 gap-4 w-full p-6"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.3 }}
+          initial={{opacity: 0, scale: 0.95}}
+          animate={{opacity: 1, scale: 1}}
+          exit={{opacity: 0, scale: 0.95}}
+          transition={{duration: 0.3}}
         >
-          {items.map((item, i) => (
-            <div
+          {items.map((item, i) => (<div
               key={i}
               className="text-xl font-semibold text-center p-2"
             >
               {item}
-            </div>
-          ))}
-        </motion.div>
-      ) : (
+            </div>))}
+        </motion.div>) : (// When not hovered show the carousel
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
             className="absolute text-2xl font-bold"
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: "0%", opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
+            initial={{x: "-100%", opacity: 0}}
+            animate={{x: "0%", opacity: 1}}
+            exit={{x: "100%", opacity: 0}}
             transition={{
               x: {
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
+                type: "spring", stiffness: 300, damping: 30,
               },
             }}
           >
             {items[index]}
           </motion.div>
-        </AnimatePresence>
-      )}
-    </motion.div>
-  );
+        </AnimatePresence>)}
+    </motion.div>);
 }
 
 export default SkillsCarousel;
