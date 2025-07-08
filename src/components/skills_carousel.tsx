@@ -6,14 +6,13 @@ interface SkillsCarouselProps {
   items: string[];
   rotateDelayMS?: number;
   hoverDelayMS?: number;
+  scrollOnHover?: boolean;
 }
 
 /**
  * A carousel which rotates between a set of text options
- * @param props
- * @constructor
  */
-function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100}: SkillsCarouselProps) {
+function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100, scrollOnHover = false}: SkillsCarouselProps) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [hoverTimeoutId, setHoverTimeoutId] = useState<number | null>(null);
@@ -26,12 +25,13 @@ function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100}: 
 
   // Prevent default scrolling when mousing over the carousel
   useEffect(() => {
+    if (!scrollOnHover) return;
     const el: HTMLElement | null = containerRef.current as HTMLElement | null;
     if (!el) return;
     const handler = (e: WheelEvent) => e.preventDefault();
     el.addEventListener('wheel', handler, { passive: false });
     return () => el.removeEventListener('wheel', handler);
-  }, [containerRef]);
+  }, [containerRef, scrollOnHover]);
 
   useEffect(() => {
     // Rotate the index
@@ -54,6 +54,7 @@ function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100}: 
   }, [index, rotateDelayMS, items.length, hovered, remainingTime]);
 
   function onHover() {
+    if (!scrollOnHover) return;
     // timeout for the pips to appear when hovered
     const timeout = setTimeout(() => {
       // remember the rotate delay so we can resume after
