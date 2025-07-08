@@ -22,6 +22,7 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
   const [rotateTimeoutStarted, setRotateTimeoutStarted] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState<number | undefined>(rotateDelayMS);
   const containerRef = useRef(null);
+  const [lastDirection, setLastDirection] = useState<"forward" | "backward">("forward");
 
   // Prevent default scrolling when mousing over the carousel
   useEffect(() => {
@@ -38,7 +39,10 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
 
     // create the timeout for rotation
     const timeoutId = setTimeout(() => {
-      setIndex((prev) => (prev + 1) % items.length);
+      setIndex((prev) => {
+        setLastDirection("forward");
+        return (prev + 1) % items.length;
+      });
       // on rotate reset the remaining time and use this as the start time of the next rotate
       setRemainingTime(rotateDelayMS);
       setRotateTimeoutStarted(Date.now());
@@ -75,8 +79,10 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
   function onWheel(e: React.WheelEvent) {
     if (!hovered) return;
     if (e.deltaY > 0) {
+      setLastDirection("forward");
       setIndex((prev) => (prev + 1) % items.length);
     } else if (e.deltaY < 0) {
+      setLastDirection("backward");
       setIndex((prev) => (prev - 1 + items.length) % items.length);
     }
   }
@@ -95,9 +101,15 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: 
         <motion.div
           key={index}
           className="absolute text-2xl font-bold"
-          initial={{x: "-100%", opacity: 0}}
+          initial={{
+            x: lastDirection === "forward" ? "-100%" : "100%",
+            opacity: 0
+          }}
           animate={{x: "0%", opacity: 1}}
-          exit={{x: "100%", opacity: 0}}
+          exit={{
+            x: lastDirection === "forward" ? "100%" : "-100%",
+            opacity: 0
+          }}
           transition={{
             x: {
               type: "spring", stiffness: 400, damping: 50,
