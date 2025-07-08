@@ -13,7 +13,7 @@ interface SkillsCarouselProps {
  * @param props
  * @constructor
  */
-function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 200}: SkillsCarouselProps) {
+function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 100}: SkillsCarouselProps) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<number | null>(null);
@@ -41,47 +41,50 @@ function SkillsCarousel({items = [], rotateDelayMS = 2500, hoverDelayMS = 200}: 
     setHovered(false);
   }
 
+  // Handle scroll wheel to change index
+  function onWheel(e: React.WheelEvent) {
+    if (!hovered) return;
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      setIndex((prev) => (prev + 1) % items.length);
+    } else if (e.deltaY < 0) {
+      setIndex((prev) => (prev - 1 + items.length) % items.length);
+    }
+  }
+
   return (<motion.div
       className="relative w-full h-40 overflow-hidden flex items-center justify-center"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      animate={{
-        height: 160, width: "100%",
-      }}
+      onWheel={onWheel}
+      animate={{height: 160, width: "100%"}}
       transition={{type: "spring", stiffness: 300, damping: 30}}
       style={{cursor: "pointer"}}
     >
-      {hovered ? (// When hovered show all the items
+      <AnimatePresence mode="wait">
         <motion.div
-          className="grid grid-cols-3 gap-4 w-full p-6"
-          initial={{opacity: 0, scale: 0.95}}
-          animate={{opacity: 1, scale: 1}}
-          exit={{opacity: 0, scale: 0.95}}
-          transition={{duration: 0.3}}
+          key={index}
+          className="absolute text-2xl font-bold"
+          initial={{x: "-100%", opacity: 0}}
+          animate={{x: "0%", opacity: 1}}
+          exit={{x: "100%", opacity: 0}}
+          transition={{
+            x: {
+              type: "spring", stiffness: 300, damping: 30,
+            },
+          }}
         >
-          {items.map((item, i) => (<div
+          {items[index]}
+        </motion.div>
+      </AnimatePresence>
+      {/* Pips at the bottom */}
+      {hovered && (<div className="absolute bottom-2 left-0 w-full flex justify-center gap-2">
+          {items.map((_, i) => (<span
               key={i}
-              className="text-xl font-semibold text-center p-2"
-            >
-              {item}
-            </div>))}
-        </motion.div>) : (// When not hovered show the carousel
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            className="absolute text-2xl font-bold"
-            initial={{x: "-100%", opacity: 0}}
-            animate={{x: "0%", opacity: 1}}
-            exit={{x: "100%", opacity: 0}}
-            transition={{
-              x: {
-                type: "spring", stiffness: 300, damping: 30,
-              },
-            }}
-          >
-            {items[index]}
-          </motion.div>
-        </AnimatePresence>)}
+              className={`inline-block w-3 h-3 rounded-full transition-all duration-200 ${i === index ? 'bg-blue-500 scale-125' : 'bg-gray-300 scale-100'}`}
+              style={{boxShadow: i === index ? '0 0 0 2px #3b82f6' : undefined}}
+            />))}
+        </div>)}
     </motion.div>);
 }
 
