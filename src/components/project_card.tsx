@@ -62,9 +62,9 @@ function ProjectCard({project, index}: {
     initial={{opacity: 0}}
     whileInView={{opacity: 1}}
     transition={{
-      duration: 0.5, delay: 0.6,
+      duration: 0.8, delay: 0.1,
     }}
-    className="flex flex-row overflow-hidden outline-dashed"
+    className="flex flex-row overflow-hidden outline-dashed rounded-sm w-full max-w-md h-full"
   >
     <div className="p-3 flex flex-col justify-between">
       <div>
