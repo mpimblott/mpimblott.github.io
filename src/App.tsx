@@ -1,7 +1,7 @@
 import { FaGithub, FaLinkedin, FaChevronDown } from 'react-icons/fa';
 import SkillsCarousel from "./components/skills_carousel";
-import ScrollTracker from "./components/scroll_tracker";
 import Gridimp from "./pages/gridimp";
+import Diamond from "./pages/diamond";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
       </section>
       <main className="flex flex-col items-center w-full px-4 mb-12">
         <Gridimp/>
+        <Diamond/>
       </main>
       <footer className="w-full py-6 mt-auto text-center text-gray-400">
         <p>&copy; {new Date().getFullYear()} Matthew Pimblott. All rights reserved.</p>

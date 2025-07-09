@@ -1,7 +1,7 @@
 import React from 'react';
 import * as motion from "motion/react-client";
 import { IconType } from 'react-icons'
-import { FaAws, FaJava, FaPython } from "react-icons/fa";
+import { FaAws, FaDocker, FaJava, FaLinux, FaPython } from "react-icons/fa";
 import { SiMlflow, SiPytorch, SiScikitlearn, SiScipy, SiTensorflow, SiTerraform } from "react-icons/si";
 
 
@@ -44,6 +44,14 @@ export const Terraform: Technology = {
 
 export const TensorFlow: Technology = {
   name: "TensorFlow", icon: SiTensorflow
+}
+
+export const Linux: Technology = {
+  name: "Linux", icon: FaLinux
+}
+
+export const Docker: Technology = {
+  name: "Docker", icon: FaDocker
 }
 
 export interface Project {

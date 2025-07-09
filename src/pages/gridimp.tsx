@@ -1,6 +1,6 @@
 import React from 'react';
 import ProjectCard, {
-  Aws, Java, MlFlow, Project, Python, Pytorch, ScikitLearn, SciPy, TensorFlow, Terraform
+  Aws, Docker, Java, Linux, MlFlow, Project, Python, Pytorch, ScikitLearn, SciPy, TensorFlow, Terraform
 } from "../components/project_card";
 import BarChart from "../components/bar_chart";
 import Experience_section from "./experience_section";
@@ -28,13 +28,15 @@ const projects: Project[] = [{
 }, {
   title: "ML Infrastructure",
   description: "Details about the fourth project and its impact.",
-  technologies: [Aws, MlFlow, Terraform],
+  technologies: [Aws, Linux, Docker, Terraform],
   link: "#"
 }];
 
-
+/**
+ * Experience profile section for Gridimp work
+ */
 function Gridimp(props) {
-  return (<Experience_section title={"Gridimp ~ Software Developer"} children={<>
+  return (<Experience_section title={"Gridimp"} subtitle={"Software Developer"} children={<>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {projects.map((project, index) => (
           <ProjectCard key={project.title} project={project} index={index} children={project.children}/> // @ts-ignore
