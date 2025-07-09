@@ -1,8 +1,10 @@
 import React from 'react';
 import * as motion from "motion/react-client";
 import { IconType } from 'react-icons'
-import { FaAws, FaDocker, FaJava, FaLinux, FaPython } from "react-icons/fa";
-import { SiMlflow, SiPytorch, SiScikitlearn, SiScipy, SiTensorflow, SiTerraform } from "react-icons/si";
+import { FaAws, FaDocker, FaJava, FaLinux, FaPython, FaVuejs } from "react-icons/fa";
+import {
+  SiFastapi, SiKubernetes, SiMlflow, SiPytorch, SiScikitlearn, SiScipy, SiTensorflow, SiTerraform, SiTypescript
+} from "react-icons/si";
 
 
 export interface Technology {
@@ -54,10 +56,27 @@ export const Docker: Technology = {
   name: "Docker", icon: FaDocker
 }
 
+export const Kubernetes: Technology = {
+  name: "Kubernetes", icon: SiKubernetes
+}
+
+export const FastAPI: Technology = {
+  name: "FastAPI", icon: SiFastapi
+}
+
+export const VueJs: Technology = {
+  name: "Vue.js", icon: FaVuejs
+}
+
+export const Typescript: Technology = {
+  name: "TypeScript", icon: SiTypescript
+}
+
+
 export interface Project {
   title: string;
   description: string;
-  technologies: Technology[];
+  technologies?: Technology[];
   link: string;
   children?: React.ReactNode;
 }
@@ -86,7 +105,7 @@ function ProjectCard({project, index, children}: {
         </div>
       </div>
       <div className="flex flex-wrap gap-2 pl-1 pb-1">
-        {project.technologies.map((tech, i) => (<div key={i} className="relative group">
+        {project.technologies && project.technologies.map((tech, i) => (<div key={i} className="relative group">
           <div className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
             <tech.icon className="w-6 h-6"/>
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-100">

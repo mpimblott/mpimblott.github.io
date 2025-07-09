@@ -20,7 +20,9 @@ function App() {
       <main className="flex flex-col items-center px-4 mb-12">
         <div className="w-4/6">
           <Gridimp/>
+          <div className="pt-36">
           <Diamond/>
+          </div>
         </div>
       </main>
       <footer className="w-full py-6 mt-auto text-center text-gray-400">

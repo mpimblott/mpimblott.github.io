@@ -52,7 +52,7 @@ function Gridimp() {
                               children={<>
                                 <article className="text-justify mb-6">
                                   <p className="mb-4">I have been working as a software developer in the data science
-                                    team at Gridimp since August
+                                    team at <a href="https://www.gridimp.com/"><u>Gridimp</u></a> since August
                                     2024.
                                     Gridimp is a startup in the energy sector focused on automated control
                                     and analytics for grid-connected assets such as solar and battery systems.
