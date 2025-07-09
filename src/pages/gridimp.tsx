@@ -22,18 +22,24 @@ const projects: Project[] = [{
     }, {value: 0.6, colour: '#DDA0DD', label: 'Arbitrage Value'}]}/>
 }, {
   title: "Reinforcement Learning Battery Control",
-  description: "I Researched and prototyped a novel battery control algorithm using deep reinforcement learning with" + " a focus on benchmarking against data gathered from site deployments.",
+  description: "I researched and prototyped a novel battery control algorithm applying deep reinforcement. I evaluated a range of approaches including value function approximation " +
+    "methods and transformer-based models to find the right approach balancing performance, flexibility and cost. We used MLFlow " +
+    "to manage the lifecycle of our models and created a pipeline to prepare models for site deployments. I also spent some time " +
+    "porting the existing algorithms from TensorFlow to PyTorch to enable access to new algorithms.",
   technologies: [Python, Pytorch, MlFlow, TensorFlow],
   link: "#",
   children: <div className="h-30 w-30"><ConnectedNetwork/></div>
 }, {
   title: "Market Forecasting",
-  description: "Description of the second project highlighting main accomplishments.",
+  description: "I worked on the development of a market forecasting model for day ahead energy prices to feed into battery control algorithms. " +
+  "This required exploratory analysis and evaluation of a variety of approaches.",
   technologies: [Python, ScikitLearn, SciPy],
   link: "#"
 }, {
   title: "ML Infrastructure",
-  description: "Details about the fourth project and its impact.",
+  description: "I helped maintain the existing ML infrastructure for the company's data analytics processes and deployed " +
+  "a new model training pipeline to AWS utilising containerised serverless compute. I created a pipeline to containerise and launch training " +
+  "and trialed infrastructure as code using terraform to improve maintainability and scalability.",
   technologies: [Aws, Linux, Docker, Terraform],
   link: "#"
 }];
