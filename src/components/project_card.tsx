@@ -49,7 +49,6 @@ export const TensorFlow: Technology = {
 export interface Project {
   title: string;
   description: string;
-  imageUrl: string;
   technologies: Technology[];
   link: string;
   children?: React.ReactNode;
