@@ -4,8 +4,7 @@ import * as motion from "motion/react-client";
 import profile_photo from "../assets/profile_photo.jpg";
 
 function Profile() {
-  return (
-    <div className="container mx-auto px-4 py-16">
+  return (<div className="container mx-auto px-4 py-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <motion.div
           className="bg-gray-800 rounded-lg w-32 mx-auto md:w-48"
@@ -25,14 +24,15 @@ function Profile() {
         >
           <h1 className="text-4xl font-bold">About Me</h1>
           <p className="text-lg text-gray-300">
-            Hi my name is Matthew, I'm a software developer and ML Engineer based in the UK. During my degree I worked as a research software engineer specialising
-            in deep learning image processing at the UK's National Synchrotron and I am currently working at a startup in the energy sector. I did my
+            Hi my name is Matthew, I'm a software developer and ML Engineer based in the UK. I currently work on
+            reinforcement learning control systems at a startup in the energy sector. During my degree I spent a year
+            working as a research software engineer specialising
+            in deep learning image processing at the UK's National Synchrotron. I did my
             Bachelor's degree in Mathematical Sciences at the University of Bath.
           </p>
         </motion.div>
       </div>
-    </div>
-  );
+    </div>);
 }
 
 export default Profile;
