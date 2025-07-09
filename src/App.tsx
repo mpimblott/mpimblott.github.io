@@ -14,6 +14,7 @@ function App() {
         <section className="flex flex-col items-center justify-center min-h-screen relative">
           <SocialsOverlay/>
           <h1 className="text-6xl font-bold mb-4 text-center">Matthew Pimblott</h1>
+          <h1 className="text-2xl font-bold mb-4 text-center text-gray-500">ML Engineer and Software Developer</h1>
           <div className="mb-6">
             <Socials/>
           </div>
