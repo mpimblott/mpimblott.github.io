@@ -11,11 +11,14 @@ interface QValue {
  */
 function RlControlDemo({data, maxValue}: { data: QValue[], maxValue: number }) {
   return (<>
-      <div className="flex flex-col gap-2">
-        <input type="range" min="0" max={maxValue} defaultValue="5" className="slider"/>
-        <input type="range" min="0" max={maxValue} defaultValue="3" className="slider"/>
-        <input type="range" min="0" max={maxValue} defaultValue="7" className="slider"/>
-      </div>
+    <div className="flex flex-col gap-2">
+      <input type="range" min="0" max={maxValue} defaultValue="5"
+             className="slider h-1 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:w-2"/>
+      <input type="range" min="0" max={maxValue} defaultValue="3"
+             className="slider h-1 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:w-2"/>
+      <input type="range" min="0" max={maxValue} defaultValue="7"
+             className="slider h-1 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:w-2"/>
+    </div>
       <div className="flex flex-row mt-3">
         {data.map((cell, i) => (<motion.div
           key={`${i}`}
