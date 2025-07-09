@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, useScroll } from "motion/react"
 
-function ScrollTracker(props) {
+function ScrollTracker() {
   /**
    * Adapted from example: https://examples.motion.dev/react/scroll-linked
    */

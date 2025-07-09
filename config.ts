@@ -1,0 +1,7 @@
+export const CV_PATH = import.meta.env.VITE_CV_PATH; //@ts-ignore
+export const GITHUB_LINK = import.meta.env.VITE_GITHUB_LINK;
+export const LINKEDIN_LINK = import.meta.env.VITE_LINKEDIN_LINK;
+
+if (!(CV_PATH && GITHUB_LINK && LINKEDIN_LINK)) {
+  console.error("Missing environment variables");
+}
