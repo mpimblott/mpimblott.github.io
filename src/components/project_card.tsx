@@ -52,11 +52,12 @@ export interface Project {
   imageUrl: string;
   technologies: Technology[];
   link: string;
+  children?: React.ReactNode;
 }
 
 
-function ProjectCard({project, index}: {
-  project: Project; index: number;
+function ProjectCard({project, index, children}: {
+  project: Project; index: number, children?: React.ReactNode;
 }) {
   return (<motion.div
     initial={{opacity: 0}}
@@ -68,8 +69,17 @@ function ProjectCard({project, index}: {
   >
     <div className="p-3 flex flex-col justify-between">
       <div>
-        <h3 className="text-l font-semibold mb-2">{project.title}</h3>
-        <p className="text-gray-300 mb-4 text-sm">{project.description}</p>
+        <div className="flex gap-4 items-start">
+          {children && (
+            <div className="w-1/3 aspect-square">
+              {children}
+            </div>
+          )}
+          <div>
+            <h3 className="text-l font-semibold mb-2">{project.title}</h3>
+            <p className="text-gray-300 mb-4 text-sm">{project.description}</p>
+          </div>
+        </div>
       </div>
       <div className="flex flex-wrap gap-2">
         {project.technologies.map((tech, i) => (<div key={i} className="relative group">
@@ -83,7 +93,6 @@ function ProjectCard({project, index}: {
             </div>
           </div>
         </div>))}
-
       </div>
     </div>
   </motion.div>);
