@@ -6,7 +6,6 @@ import Gridimp from "./pages/gridimp";
 function App() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-      <ScrollTracker/>
       <section className="flex flex-col items-center justify-center min-h-screen relative">
         <h1 className="text-6xl font-bold mb-4 text-center">Matthew Pimblott</h1>
         <div className="flex gap-x-4 mb-6">
