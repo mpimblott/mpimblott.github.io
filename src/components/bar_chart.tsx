@@ -12,8 +12,8 @@ interface BarChartValue {
  * @param values The height of the bars relative to the container
  */
 function BarChart({values}: { values: BarChartValue[] }) {
-  return (<div className="flex justify-center h-full">
-    <div className="flex w-fit p-2 justify-between gap-1 items-end h-full">
+  return (<div className="flex justify-center h-30">
+    <div className="flex w-fit justify-between gap-1 items-end h-full">
       {values.map((bar, index) => (
         <div key={index} className="flex relative group h-full items-end" role="graphics-symbol"
              aria-label={`${bar.label}: ${bar.value * 100}%`}>

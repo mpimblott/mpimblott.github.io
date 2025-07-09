@@ -73,23 +73,17 @@ function ProjectCard({project, index, children}: {
     transition={{
       duration: 0.8, delay: 0.1,
     }}
-    className="flex flex-row overflow-hidden outline-dashed rounded-sm w-full h-full"
+    className="flex flex-row overflow-hidden outline-solid rounded-sm w-full h-full outline-gray-500 p-2"
   >
-    <div className="p-3 flex flex-col justify-between w-full">
+    <div className="flow-root flex-col h-full justify-between">
+      {children && (<div className="float-left pr-4 pl-2 pt-2">
+        {children}
+      </div>)}
       <div>
-        <div className="flex gap-4 items-start h-full">
-          {children && (
-            <div className="h-full flex-shrink-0">
-              {children}
-            </div>
-          )}
-          <div className="flex-grow">
-            <h3 className="text-l font-semibold mb-2">{project.title}</h3>
-            <p className="text-gray-300 mb-4 text-sm text-justify">{project.description}</p>
-          </div>
-        </div>
+        <h3 className="text-l font-semibold mb-2">{project.title}</h3>
+        <p className="text-gray-300 mb-4 text-sm">{project.description}</p>
       </div>
-      <div className="flex flex-wrap gap-2 mt-2">
+      <div className="flex flex-wrap gap-2">
         {project.technologies.map((tech, i) => (<div key={i} className="relative group">
           <div className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
             <tech.icon className="w-6 h-6"/>
