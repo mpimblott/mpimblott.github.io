@@ -113,7 +113,7 @@ function ProjectCard({project, index, children}: {
         </div>)}
         <div>
           <h3 className="text-l font-semibold mb-2">{project.title}</h3>
-          <p className="text-gray-300 text-sm">{project.description}</p>
+          <p className="text-gray-300 text-md">{project.description}</p>
         </div>
       </div>
       <div className="flex justify-between items-center pl-1 pb-1">
