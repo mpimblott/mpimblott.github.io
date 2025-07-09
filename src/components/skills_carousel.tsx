@@ -62,7 +62,7 @@ function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100, s
         // clear then store the remaining time
         clearTimeout(rotateTimeoutId);
         setRotateTimeoutId(null);
-        setRemainingTime((prev) => prev - (Date.now() - rotateTimeoutStarted));
+        setRemainingTime((prev) => (prev && rotateTimeoutStarted) ? prev - (Date.now() - rotateTimeoutStarted): rotateDelayMS);
       }
       setHovered(true);
     }, hoverDelayMS); // 500ms delay
