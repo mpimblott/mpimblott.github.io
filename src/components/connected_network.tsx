@@ -27,8 +27,7 @@ function ConnectedNetwork() {
       .attr('preserveAspectRatio', 'xMidYMid meet');
 
     // Define layers
-    const layers = [
-      {nodes: 3, y: margin},             // Input layer
+    const layers = [{nodes: 3, y: margin},             // Input layer
       {nodes: 2, y: height - margin}     // Output layer
     ];
 
@@ -38,19 +37,19 @@ function ConnectedNetwork() {
       const spacing = width / (layer.nodes + 1);
       for (let i = 0; i < layer.nodes; i++) {
         nodes.push({
-                     x: spacing * (i + 1),
-                     y: layer.y
+                     x: spacing * (i + 1), y: layer.y
                    });
       }
     });
 
+    const sumAllNodes = () => layers.reduce((sum, layer) => sum + layer.nodes, 0);
+
     // Create edges data
     const edges: { source: { x: number, y: number }, target: { x: number, y: number } }[] = [];
-    for (let i = 0; i < 3; i++) {           // For each input node
-      for (let j = 3; j < 5; j++) {         // Connect to each output node
+    for (let i = 0; i < layers[0].nodes; i++) {           // For each input node
+      for (let j = layers[0].nodes; j < sumAllNodes(); j++) {         // Connect to each output node
         edges.push({
-                     source: nodes[i],
-                     target: nodes[j]
+                     source: nodes[i], target: nodes[j]
                    });
       }
     }
@@ -79,11 +78,9 @@ function ConnectedNetwork() {
 
   }, []);
 
-  return (
-    <div className="flex justify-center w-full h-full">
+  return (<div className="flex justify-center w-full h-full">
       <svg ref={svgRef} style={{width: '100%', height: '100%'}}></svg>
-    </div>
-  );
+    </div>);
 }
 
 export default ConnectedNetwork;
