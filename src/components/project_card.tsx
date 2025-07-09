@@ -6,7 +6,9 @@ import {
   SiFastapi, SiKubernetes, SiMlflow, SiPytorch, SiScikitlearn, SiScipy, SiTensorflow, SiTerraform, SiTypescript
 } from "react-icons/si";
 
-
+/**
+ * Used to define the technology icons which appear along the bottom of the project card
+ */
 export interface Technology {
   name: string;
   icon: IconType;
@@ -72,20 +74,31 @@ export const Typescript: Technology = {
   name: "TypeScript", icon: SiTypescript
 }
 
-
 export interface Project {
+  // The main title for the card
   title: string;
+  // Description body for the card
   description: string;
+  // Technologies to show along the bottom
   technologies?: Technology[];
+  // A link (not in use currently)
   link: string;
+  // Child content. If this is provided, there is a space for this on the left of the card
   children?: React.ReactNode;
+  // A link to learn more about this project.
+  onwardLink?: string;
 }
 
-
+/**
+ *
+ * @param project The contents to populate this card.
+ * @param index The index of this card if the parent holds multiple.
+ * @param children Content for the child position.
+ */
 function ProjectCard({project, index, children}: {
   project: Project; index: number, children?: React.ReactNode;
 }) {
-  // fade in the card
+  // fade in the card when it first comes into view
   return (<motion.div
     initial={{opacity: 0}}
     whileInView={{opacity: 1}}
@@ -105,18 +118,24 @@ function ProjectCard({project, index, children}: {
           <p className="text-gray-300 text-sm">{project.description}</p>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2 pl-1 pb-1">
-        {project.technologies && project.technologies.map((tech, i) => (<div key={i} className="relative group">
-          <div className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-            <tech.icon className="w-6 h-6"/>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-100">
-              <div className="bg-gray-800 text-white text-sm px-2 py-1 rounded whitespace-nowrap">
-                {tech.name}
+      <div className="flex justify-between items-center pl-1 pb-1">
+        <div className="flex flex-wrap gap-2">
+          {project.technologies && project.technologies.map((tech, i) => (<div key={i} className="relative group">
+            <div className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
+              <tech.icon className="w-6 h-6"/>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-100">
+                <div className="bg-gray-800 text-white text-sm px-2 py-1 rounded whitespace-nowrap">
+                  {tech.name}
+                </div>
+                <div className="w-2 h-2 bg-gray-800 rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
               </div>
-              <div className="w-2 h-2 bg-gray-800 rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
             </div>
-          </div>
-        </div>))}
+          </div>))}
+        </div>
+        {project.onwardLink && (<a href={project.onwardLink} target="_blank" rel="noopener noreferrer"
+                                   className="px-4 py-2 mb-1 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition-colors duration-200">
+          Learn More
+        </a>)}
       </div>
     </div>
   </motion.div>);

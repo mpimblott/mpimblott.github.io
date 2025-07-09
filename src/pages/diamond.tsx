@@ -3,13 +3,14 @@ import Experience_section from "./experience_section";
 import ProjectCard, {
   Docker,
   FastAPI,
-  Kubernetes,
+  Kubernetes, Linux,
   MlFlow,
   Project,
   Python,
   Pytorch, Typescript,
   VueJs
 } from "../components/project_card";
+import { SEGMENTATION_PRESENTATION_PATH } from "../../config";
 
 const projects: Project[] = [{
   title: "Segmentation User Interface",
@@ -42,8 +43,9 @@ const projects: Project[] = [{
   description: "I used HPC resources via SLURM and GridEngine to conduct imaging processing and model training" +
     " including conducting multi-gpu training of PyTorch models. I managed my own infrastructure for my projects on" +
     " Kubernetes including GitLab runners. I packaged software for deployment company-wide on lab computers.",
-  technologies: [Kubernetes],
+  technologies: [Kubernetes, Docker, Linux],
   link: "#",
+  onwardLink: SEGMENTATION_PRESENTATION_PATH
 }];
 
 /**
