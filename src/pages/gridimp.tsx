@@ -15,7 +15,6 @@ const projects: Project[] = [{
     " Java service, integrating with the company's existing data processing pipelines. The project was deployed to" +
     " AWS and now runs daily giving customers a better understanding of their energy consumption.",
   technologies: [Java, Aws, Python],
-  link: "#",
   children: <BarChart
     values={[{value: 0.3, colour: '#FF69B4', label: 'Solar Value'}, {
       value: 1, colour: '#00CED1', label: 'Flexibility Value'
@@ -27,21 +26,18 @@ const projects: Project[] = [{
     "to manage the lifecycle of our models and created a pipeline to prepare models for site deployments. I also spent some time " +
     "porting the existing algorithms from TensorFlow to PyTorch to enable access to new algorithms.",
   technologies: [Python, Pytorch, MlFlow, TensorFlow],
-  link: "#",
   children: <div className="h-30 w-30"><ConnectedNetwork/></div>
 }, {
   title: "Market Forecasting",
   description: "I worked on the development of a market forecasting model for day ahead energy prices to feed into battery control algorithms. " +
   "This required exploratory analysis and evaluation of a variety of approaches.",
   technologies: [Python, ScikitLearn, SciPy],
-  link: "#"
 }, {
   title: "ML Infrastructure",
   description: "I helped maintain the existing ML infrastructure for the company's data analytics processes and deployed " +
   "a new model training pipeline to AWS utilising containerised serverless compute. I created a pipeline to containerise and launch training " +
   "and trialed infrastructure as code using terraform to improve maintainability and scalability.",
   technologies: [Aws, Linux, Docker, Terraform],
-  link: "#"
 }];
 
 /**

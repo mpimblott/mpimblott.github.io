@@ -81,8 +81,6 @@ export interface Project {
   description: string;
   // Technologies to show along the bottom
   technologies?: Technology[];
-  // A link (not in use currently)
-  link: string;
   // Child content. If this is provided, there is a space for this on the left of the card
   children?: React.ReactNode;
   // A link to learn more about this project.

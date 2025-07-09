@@ -20,7 +20,6 @@ const projects: Project[] = [{
     " involved working closely with colleagues to integrate with and understand the internal workings of the tools" +
     " allowing me to hook into the package enabling the users to fully control their workflow from the web.",
   technologies: [Python, FastAPI, VueJs, Typescript],
-  link: "#",
 }, {
   title: "Generation-Augmented Training",
   description: "I worked on a research project to develop a novel pre-training technique for deep learning models," +
@@ -31,21 +30,18 @@ const projects: Project[] = [{
     " the equipment makes obtaining more prohibitively expensive. I applied synthetic sinogram generation to augment" +
     " the available training data and produced a successful internal demonstration of the technique.",
   technologies: [Python, Pytorch, MlFlow],
-  link: "#",
+  onwardLink: SEGMENTATION_PRESENTATION_PATH
 }, {
   title: "Research Support",
   description: "I delivered regular training and support workshops for visiting researchers including personalised" +
     " data analysis training. This was also an opportunity to gather feedback from users to feed into the iterative" +
     " development of the product.",
-  link: "#",
 }, {
   title: "HPC, Kubernetes and Distributed Training",
   description: "I used HPC resources via SLURM and GridEngine to conduct imaging processing and model training" +
     " including conducting multi-gpu training of PyTorch models. I managed my own infrastructure for my projects on" +
     " Kubernetes including GitLab runners. I packaged software for deployment company-wide on lab computers.",
   technologies: [Kubernetes, Docker, Linux],
-  link: "#",
-  onwardLink: SEGMENTATION_PRESENTATION_PATH
 }];
 
 /**
