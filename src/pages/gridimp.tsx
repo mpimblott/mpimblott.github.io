@@ -8,15 +8,15 @@ import BarChart from "../components/bar_chart";
 
 const projects: Project[] = [{
   title: "Battery Value Analysis Tool",
-  description: "I led the research, development and deployment of a new tool tracking the value delivered by" + " client's solar and battery assets over time. This was part of a flagship cloud platform release.",
+  description: "I led the development of a machine learning service monitoring the" +
+    " performance of solar and battery assets, aggregating thousands of site measurements daily. We successfully" +
+    " deployed the product for users using AWS.",
   imageUrl: "https://placehold.co/400x300",
   technologies: [Java, Aws, Python],
   link: "#",
   children: <BarChart
     values={[{value: 0.3, colour: '#f9fc14', label: 'Solar Value'}, {
-      value: 1,
-      colour: '#fc8114',
-      label: 'Flexibility Value'
+      value: 1, colour: '#fc8114', label: 'Flexibility Value'
     }, {value: 0.6, colour: '#3ffc14', label: 'Arbitrage Value'}]}/>
 }, {
   title: "Reinforcement Learning Battery Control",
@@ -50,7 +50,8 @@ function Gridimp(props) {
       Gridimp ~ Software Developer
     </motion.div>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      {projects.map((project, index) => (<ProjectCard key={project.title} project={project} index={index} children={project.children}/> // @ts-ignore
+      {projects.map((project, index) => (
+        <ProjectCard key={project.title} project={project} index={index} children={project.children}/> // @ts-ignore
       ))}
     </div>
 

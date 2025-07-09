@@ -69,15 +69,15 @@ function ProjectCard({project, index, children}: {
   >
     <div className="p-3 flex flex-col justify-between">
       <div>
-        <div className="flex gap-4 items-start">
+        <div className="flex gap-4 items-start h-full">
           {children && (
-            <div className="w-1/3 aspect-square">
+            <div className="w-1/3 h-full">
               {children}
             </div>
           )}
           <div>
             <h3 className="text-l font-semibold mb-2">{project.title}</h3>
-            <p className="text-gray-300 mb-4 text-sm">{project.description}</p>
+            <p className="text-gray-300 mb-4 text-sm text-justify">{project.description}</p>
           </div>
         </div>
       </div>
