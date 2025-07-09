@@ -66,19 +66,20 @@ export interface Project {
 function ProjectCard({project, index, children}: {
   project: Project; index: number, children?: React.ReactNode;
 }) {
+  // fade in the card
   return (<motion.div
     initial={{opacity: 0}}
     whileInView={{opacity: 1}}
     transition={{
       duration: 0.8, delay: 0.1,
     }}
-    className="flex flex-row overflow-hidden outline-dashed rounded-sm w-full max-w-md h-full"
+    className="flex flex-row overflow-hidden outline-dashed rounded-sm w-full h-full"
   >
-    <div className="p-3 flex flex-col justify-between">
+    <div className="p-3 flex flex-col justify-between w-full">
       <div>
         <div className="flex gap-4 items-start h-full">
           {children && (
-            <div className="w-1/3 h-full">
+            <div className="h-full">
               {children}
             </div>
           )}
@@ -88,11 +89,11 @@ function ProjectCard({project, index, children}: {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 mt-2">
         {project.technologies.map((tech, i) => (<div key={i} className="relative group">
           <div className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
             <tech.icon className="w-6 h-6"/>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block">
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-100">
               <div className="bg-gray-800 text-white text-sm px-2 py-1 rounded whitespace-nowrap">
                 {tech.name}
               </div>

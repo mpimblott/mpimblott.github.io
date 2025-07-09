@@ -4,7 +4,7 @@ import ProjectCard, {
 } from "../components/project_card";
 import BarChart from "../components/bar_chart";
 import Experience_section from "./experience_section";
-import RlControlDemo from "../components/rl_control_demo";
+import ConnectedNetwork from "../components/connected_network";
 
 
 const projects: Project[] = [{
@@ -21,7 +21,7 @@ const projects: Project[] = [{
   description: "I Researched and prototyped a novel battery control algorithm using deep reinforcement learning with" + " a focus on benchmarking against data gathered from site deployments.",
   technologies: [Python, Pytorch, MlFlow, TensorFlow],
   link: "#",
-  children: <RlControlDemo data={[{value:10}, {value:1}, {value:5}, {value:3}]} maxValue={10}/>
+  children: <div className="h-30 w-30"><ConnectedNetwork /></div>
 }, {
   title: "Market Forecasting",
   description: "Description of the second project highlighting main accomplishments.",
@@ -39,9 +39,9 @@ const projects: Project[] = [{
  */
 function Gridimp() {
   return (<Experience_section title={"Gridimp"} subtitle={"Software Developer"} children={<>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
         {projects.map((project, index) => (
-          <ProjectCard key={project.title} project={project} index={index} children={project.children}/> // @ts-ignore
+          <ProjectCard key={project.title} project={project} index={index} children={project.children}/>
         ))}
       </div>
     </>} />);
