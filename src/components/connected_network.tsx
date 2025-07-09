@@ -61,7 +61,7 @@ function ConnectedNetwork() {
       .attr('x2', d => d.target.x)
       .attr('y2', d => d.target.y)
       .attr('stroke', '#aaa')
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 2)
       .each(function (d, i) {
         const animate = () => {
           d3.select(this)
@@ -94,7 +94,7 @@ function ConnectedNetwork() {
       .append('circle')
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-      .attr('r', 4)
+      .attr('r', 5)
       .attr('fill', '#4299e1');
 
   }, []);

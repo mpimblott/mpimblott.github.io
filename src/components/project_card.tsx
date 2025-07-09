@@ -79,11 +79,11 @@ function ProjectCard({project, index, children}: {
       <div>
         <div className="flex gap-4 items-start h-full">
           {children && (
-            <div className="h-full">
+            <div className="h-full flex-shrink-0">
               {children}
             </div>
           )}
-          <div>
+          <div className="flex-grow">
             <h3 className="text-l font-semibold mb-2">{project.title}</h3>
             <p className="text-gray-300 mb-4 text-sm text-justify">{project.description}</p>
           </div>
