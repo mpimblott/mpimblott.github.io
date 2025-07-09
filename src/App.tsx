@@ -23,13 +23,13 @@ function App() {
             <FaChevronDown size={36} className="animate-bounce text-blue-300"/>
           </div>
         </section>
-        <section className="pt-24">
+        <section className="pt-48">
           <Profile/>
         </section>
-        <section className="flex flex-col items-center px-4 pt-24"
+        <section className="flex flex-col items-center pt-48"
         >
           <Gridimp/>
-          <div className="pt-24">
+          <div className="pt-48">
             <Diamond/>
           </div>
         </section>
