@@ -12,6 +12,7 @@ function ExperienceSection({title, subtitle, subsubtitle, children}: {
       <motion.div
         initial={{x: -100, opacity: 0}}
         whileInView={{x: 0, opacity: 1}}
+        viewport={{once: true}}
         transition={{type: "spring", stiffness: 100, damping: 20}}
         className="text-4xl font-bold mt-12 mb-12 text-center"
       >

@@ -92,6 +92,7 @@ function ProjectCard({project, index, children}: {
     transition={{
       duration: 0.8, delay: 0.1,
     }}
+    viewport={{once: true}}
     className="flex flex-row overflow-hidden outline-solid rounded-sm w-full h-full outline-gray-500 p-2"
   >
     <div className="flex flex-col justify-between w-full h-full m-2">
