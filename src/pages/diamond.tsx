@@ -50,7 +50,7 @@ const projects: Project[] = [{
 function Diamond() {
   return (<Experience_section title={"Diamond Light Source"} subtitle={"Placement Research Software Engineer"}
                               subsubtitle={"2022-2023"}
-                              children={<>
+                              children={<div>
                                 <article className="text-justify mb-6">
                                   <p className="mb-4">I completed a year-long industrial placement at <a
                                     href="https://www.diamond.ac.uk/Home.html"><u>Diamond Light
@@ -80,7 +80,7 @@ function Diamond() {
                                     <ProjectCard key={project.title} project={project} index={index}
                                                  children={project.children}/>))}
                                 </div>
-                              </>}/>);
+                              </div>}/>);
 }
 
 export default Diamond;

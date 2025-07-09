@@ -45,7 +45,7 @@ const projects: Project[] = [{
  */
 function Gridimp() {
   return (<Experience_section title={"Gridimp"} subtitle={"Software Developer"} subsubtitle={"Aug. 2024 - Present"}
-                              children={<>
+                              children={<div>
                                 <article className="text-justify mb-6">
                                   <p className="mb-4">I have been working as a software developer in the data science
                                     team at <a href="https://www.gridimp.com/"><u>Gridimp</u></a> since August
@@ -58,7 +58,7 @@ function Gridimp() {
                                     investment and reducing carbon emissions.
                                   </p>
                                   <p>
-                                    I also lead the development of reporting mechanisms for the company's data analytics
+                                    I also led the development of reporting mechanisms for the company's data analytics
                                     platform to enable users to
                                     understand the day-to-day performance of battery systems.
                                   </p>
@@ -69,7 +69,7 @@ function Gridimp() {
                                     <ProjectCard key={project.title} project={project} index={index}
                                                  children={project.children}/>))}
                                 </div>
-                              </>}/>);
+                              </div>}/>);
 }
 
 export default Gridimp;
