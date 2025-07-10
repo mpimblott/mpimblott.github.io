@@ -1,60 +1,62 @@
-import { copyFileSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'fs';
-import { join, resolve } from 'path';
+import fs from 'fs/promises';
+import path from 'path';
 
-const DIST_DIR = resolve('./dist');
-const VITE_BUILD = join(DIST_DIR, 'vite');
-const ASTRO_BUILD = join(DIST_DIR, 'fallback');
-const FINAL_BUILD = join(DIST_DIR, 'final');
+async function mergeBuilds() {
+    const finalDir = 'dist/final';
+    const viteDir = 'dist/vite';
+    const astroDir = 'dist/astro';
 
-// Create final build directory
-mkdirSync(FINAL_BUILD, { recursive: true });
+    try {
+        // Create final directory
+        await fs.rm(finalDir, {recursive: true, force: true});
+        await fs.mkdir(finalDir, {recursive: true});
 
-// Create a JS detection script
-const jsDetectionHTML = `
-<!DOCTYPE html>
+        // Copy Vite build to final directory
+        await fs.cp(viteDir, finalDir, {recursive: true});
+
+        // Create fallback directory and copy Astro build
+        await fs.mkdir(path.join(finalDir, 'fallback'), {recursive: true});
+        await fs.cp(astroDir, path.join(finalDir, 'fallback'), {recursive: true});
+
+        // Create new index.html with JS detection
+        const indexHtml = `<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Pimblott</title>
     <script>
-        // If JS is enabled, redirect to React version
-        window.location.href = '/app/';
+    // Check if JavaScript is working
+    window.addEventListener('DOMContentLoaded', function() {
+        // JavaScript is working, we can stay here
+        // The Vite app will take over
+    });
     </script>
-    <meta http-equiv="refresh" content="0;url=/profile/fallback/">
     <noscript>
-        <meta http-equiv="refresh" content="0;url=/profile/fallback/">
+        <meta http-equiv="refresh" content="0;url=/fallback/">
     </noscript>
 </head>
 <body>
-    <p>Redirecting to the appropriate version...</p>
-    <p>Click <a href="/fallback/">here</a> if you are not redirected.</p>
+    <div id="root"></div>
+    <script type="module" src="/assets/index.js"></script>
+    <noscript>
+        <p>JavaScript is required to view this site.</p>
+        <p>Redirecting to static version... If not redirected, <a href="/fallback/">click here</a>.</p>
+    </noscript>
 </body>
-</html>
-`;
+</html>`;
 
-// Create app directory for React build
-mkdirSync(join(FINAL_BUILD, 'app'), { recursive: true });
-copyDirectory(VITE_BUILD, join(FINAL_BUILD, 'app'));
+        await fs.writeFile(path.join(finalDir, 'index.html'), indexHtml);
 
-// Create fallback directory for Astro
-mkdirSync(join(FINAL_BUILD, 'fallback'), { recursive: true });
-copyDirectory(ASTRO_BUILD, join(FINAL_BUILD, 'fallback'));
+        // Clean up temporary directories
+        // await fs.rm(viteDir, {recursive: true});
+        // await fs.rm(astroDir, {recursive: true});
 
-// Write the JS detection page as index.html
-writeFileSync(join(FINAL_BUILD, 'index.html'), jsDetectionHTML);
-writeFileSync(join(FINAL_BUILD, '404.html'), jsDetectionHTML);
-
-function copyDirectory(source, destination) {
-    const files = readdirSync(source);
-
-    files.forEach(file => {
-        const sourcePath = join(source, file);
-        const destPath = join(destination, file);
-
-        if (statSync(sourcePath).isDirectory()) {
-            mkdirSync(destPath, { recursive: true });
-            copyDirectory(sourcePath, destPath);
-        } else {
-            copyFileSync(sourcePath, destPath);
-        }
-    });
+        console.log('Successfully merged builds');
+    } catch (error) {
+        console.error('Error during build merge:', error);
+        process.exit(1);
+    }
 }
+
+mergeBuilds();

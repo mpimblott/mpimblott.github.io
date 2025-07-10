@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist/final",
+    "deploy": "gh-pages -d dist/vite",
     "dev": "vite",
     "build:vite": "vite build",
     "lint": "eslint .",
@@ -13,7 +13,10 @@
     "dev:astro": "astro dev",
     "build:astro": "astro build",
     "merge-builds": "node merge_builds.js",
-    "build": "npm run build:vite && npm run build:astro && npm run merge-builds"
+    "build": "npm run build:vite && npm run build:astro && npm run merge-builds",
+    "serve": "serve dist/final",
+    "serve:astro": "serve dist/astro",
+    "serve:vite": "serve dist/vite"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
@@ -38,6 +41,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
+    "serve": "^14.2.4",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
     "vite": "^7.0.3"
