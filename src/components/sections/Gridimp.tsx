@@ -1,10 +1,10 @@
 import React from 'react';
 import ProjectCard, {
   Project
-} from "../project_card";
-import BarChart from "../bar_chart";
-import Experience_section from "./experience_section";
-import ConnectedNetwork from "../connected_network";
+} from "../ProjectCard";
+import BarChart from "../BarChart";
+import Experience_section from "./ExperienceSection";
+import ConnectedNetwork from "../ConnectedNetwork";
 import { useHasMounted } from "../../hooks/useHasMounted";
 import {
   Aws,

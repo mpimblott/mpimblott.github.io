@@ -1,10 +1,10 @@
 import { FaChevronDown } from 'react-icons/fa';
-import SkillsCarousel from "../skills_carousel";
-import Gridimp from "../sections/gridimp";
-import Diamond from "../sections/diamond";
-import SocialsOverlay from "../socials_overlay";
-import Socials from "../socials";
-import Profile from "../sections/profile";
+import SkillsCarousel from "../SkillCarousel";
+import Gridimp from "./Gridimp";
+import Diamond from "./Diamond";
+import SocialsOverlay from "../SocialsOverlay";
+import Socials from "../Socials";
+import Profile from "./Profile";
 import { useHasMounted } from "../../hooks/useHasMounted";
 
 function Home() {

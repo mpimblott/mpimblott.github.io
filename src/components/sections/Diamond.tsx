@@ -1,8 +1,8 @@
 import React from 'react';
-import Experience_section from "./experience_section";
+import Experience_section from "./ExperienceSection";
 import ProjectCard, {
   Project
-} from "../project_card";
+} from "../ProjectCard";
 import { SEGMENTATION_PRESENTATION_PATH } from "../../../config";
 import { useHasMounted } from "../../hooks/useHasMounted";
 import { Docker, FastAPI, Kubernetes, Linux, MlFlow, Python, Pytorch, Typescript, VueJs } from "../../types/technology";
