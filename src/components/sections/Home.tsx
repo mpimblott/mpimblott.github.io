@@ -5,8 +5,10 @@ import Diamond from "../sections/diamond";
 import SocialsOverlay from "../socials_overlay";
 import Socials from "../socials";
 import Profile from "../sections/profile";
+import { useHasMounted } from "../../hooks/useHasMounted";
 
 function Home() {
+  const hasMounted = useHasMounted();
 
   return (<div className="flex flex-col min-h-screen bg-gray-900 text-white">
     <main className="flex flex-col justify-center items-center">
@@ -25,7 +27,7 @@ function Home() {
           </div>
         </section>
         <section className="pt-48">
-          <Profile/>
+          <Profile animate={hasMounted}/>
         </section>
         <section className="flex flex-col items-center pt-48"
         >
