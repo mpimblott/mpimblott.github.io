@@ -1,86 +1,20 @@
 import React from 'react';
-import { IconType } from 'react-icons'
-import { FaAws, FaDocker, FaJava, FaLinux, FaPython, FaVuejs } from "react-icons/fa";
-import {
-  SiFastapi,
-  SiKubernetes,
-  SiMlflow,
-  SiPytorch,
-  SiScikitlearn,
-  SiScipy,
-  SiTensorflow,
-  SiTerraform,
-  SiTypescript
-} from "react-icons/si";
 import { motion } from "framer-motion";
+import { Technology } from "../types/technology";
 
-/**
- * Used to define the technology icons which appear along the bottom of the project card
- */
-export interface Technology {
-  name: string;
-  icon: IconType;
-}
-
-export const Aws: Technology = {
-  name: "AWS", icon: FaAws
-}
-
-export const Python: Technology = {
-  name: "Python", icon: FaPython
-}
-
-export const Pytorch: Technology = {
-  name: "PyTorch", icon: SiPytorch
-}
-
-export const ScikitLearn: Technology = {
-  name: "Scikit-learn", icon: SiScikitlearn
-}
-
-export const SciPy: Technology = {
-  name: "SciPy", icon: SiScipy
-}
-
-export const Java: Technology = {
-  name: "Java", icon: FaJava
-}
-
-export const MlFlow: Technology = {
-  name: "MLFlow", icon: SiMlflow
-}
-
-export const Terraform: Technology = {
-  name: "Terraform", icon: SiTerraform
-}
-
-export const TensorFlow: Technology = {
-  name: "TensorFlow", icon: SiTensorflow
-}
-
-export const Linux: Technology = {
-  name: "Linux", icon: FaLinux
-}
-
-export const Docker: Technology = {
-  name: "Docker", icon: FaDocker
-}
-
-export const Kubernetes: Technology = {
-  name: "Kubernetes", icon: SiKubernetes
-}
-
-export const FastAPI: Technology = {
-  name: "FastAPI", icon: SiFastapi
-}
-
-export const VueJs: Technology = {
-  name: "Vue.js", icon: FaVuejs
-}
-
-export const Typescript: Technology = {
-  name: "TypeScript", icon: SiTypescript
-}
+const AnimatedContainer = ({children, className}: {
+  children: React.ReactNode; className?: string;
+}) => (<motion.div
+  className={className}
+  initial={{opacity: 0}}
+  whileInView={{opacity: 1}}
+  transition={{
+    duration: 0.8, delay: 0.1,
+  }}
+  viewport={{once: true}}
+>
+  {children}
+</motion.div>);
 
 export interface Project {
   // The main title for the card
@@ -95,19 +29,8 @@ export interface Project {
   onwardLink?: string;
 }
 
-/**
- *
- * @param project The contents to populate this card.
- * @param index The index of this card if the parent holds multiple.
- * @param children Content for the child position.
- * @param animate If true an animation is applied when coming into view
- */
-function ProjectCard({project, children, animate = true}: {
-  project: Project; children?: React.ReactNode, animate?: boolean;
-}) {
-  // fade in the card when it first comes into view
-
-  const content = <div className="flex flex-col justify-between w-full h-full m-2">
+const CardBody = ({project, children}: { project: Project, children: React.ReactNode }) => {
+  return <div className="flex flex-col justify-between w-full h-full m-2">
     <div className="flow-root h-full">
       {children && (<div className="float-left pr-4 pl-2 pt-2">
         {children}
@@ -137,18 +60,28 @@ function ProjectCard({project, children, animate = true}: {
       </a>)}
     </div>
   </div>
+}
 
-  return animate ? (<motion.div
-    initial={{opacity: 0}}
-    whileInView={{opacity: 1}}
-    transition={{
-      duration: 0.8, delay: 0.1,
-    }}
-    viewport={{once: true}}
-    className="flex flex-row overflow-hidden outline-solid rounded-sm w-full h-full outline-gray-500 p-2"
+/**
+ *
+ * @param project The contents to populate this card.
+ * @param index The index of this card if the parent holds multiple.
+ * @param children Content for the child position.
+ * @param animate If true an animation is applied when coming into view
+ */
+function ProjectCard({project, children, animate = true}: {
+  project: Project; children?: React.ReactNode, animate?: boolean;
+}) {
+
+  const containerClasses = "flex flex-row overflow-hidden outline-solid rounded-sm w-full h-full outline-gray-500 p-2";
+
+  return animate ? (<AnimatedContainer
+    className={containerClasses}
   >
-    {content}
-  </motion.div>) : <div className="flex flex-row overflow-hidden outline-solid rounded-sm w-full h-full outline-gray-500 p-2">{content}</div>;
+    <CardBody project={project} children={children}/>
+  </AnimatedContainer>) : <div
+    className={containerClasses}><CardBody
+    project={project} children={children}/></div>;
 }
 
 export default ProjectCard;

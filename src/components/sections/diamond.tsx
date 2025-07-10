@@ -1,19 +1,11 @@
 import React from 'react';
 import Experience_section from "./experience_section";
 import ProjectCard, {
-  Docker,
-  FastAPI,
-  Kubernetes,
-  Linux,
-  MlFlow,
-  Project,
-  Python,
-  Pytorch,
-  Typescript,
-  VueJs
+  Project
 } from "../project_card";
 import { SEGMENTATION_PRESENTATION_PATH } from "../../../config";
 import { useHasMounted } from "../../hooks/useHasMounted";
+import { Docker, FastAPI, Kubernetes, Linux, MlFlow, Python, Pytorch, Typescript, VueJs } from "../../types/technology";
 
 const projects: Project[] = [{
   title: "Segmentation User Interface",
