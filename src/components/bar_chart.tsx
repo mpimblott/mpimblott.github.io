@@ -11,17 +11,22 @@ interface BarChartValue {
  * Display a mock bar chart with an entry animation
  * @param values The height of the bars relative to the container
  */
-function BarChart({values}: { values: BarChartValue[] }) {
+function BarChart({values, animate = true}: { values: BarChartValue[], animate?: boolean }) {
   return (<div className="flex justify-center h-30">
     <div className="flex w-fit justify-between gap-1 items-end h-full">
       {values.map((bar, index) => (
         <div key={index} className="flex relative group h-full items-end" role="graphics-symbol"
              aria-label={`${bar.label}: ${bar.value * 100}%`}>
-          <motion.div style={{backgroundColor: bar.colour}}
-                      className="w-5 rounded-sm"
-                      initial={{height: 0}}
-                      whileInView={{height: `${bar.value * 100}%`}}
-                      transition={{duration: 0.4, delay: Math.min(index * 0.1, 0.5)}}/>
+          {animate ? (
+            <motion.div style={{backgroundColor: bar.colour}}
+                        className="w-5 rounded-sm"
+                        initial={{height: 0}}
+                        whileInView={{height: `${bar.value * 100}%`}}
+                        transition={{duration: 0.4, delay: Math.min(index * 0.1, 0.5)}}/>
+          ) : (
+            <div style={{backgroundColor: bar.colour, height: `${bar.value * 100}%`}}
+                 className="w-5 rounded-sm"/>
+          )}
           <div></div>
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 hidden group-hover:block z-10"
                style={{marginBottom: `${(1.2 - bar.value) * -100}%`}}>

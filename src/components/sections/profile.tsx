@@ -1,7 +1,7 @@
 import React from 'react';
 import * as motion from "motion/react-client";
 // @ts-ignore
-import profile_photo from "../assets/profile_photo.jpg";
+import profile_photo from "../../assets/profile_photo.jpg";
 
 function Profile() {
   return (<div className="container mx-auto px-4 py-16">
