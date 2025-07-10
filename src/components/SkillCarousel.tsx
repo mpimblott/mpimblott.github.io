@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import * as motion from "motion/react-client";
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 
 interface SkillsCarouselProps {
@@ -9,127 +9,177 @@ interface SkillsCarouselProps {
   scrollOnHover?: boolean;
 }
 
+function CarouselIndicator({index, totalItems, currentIndex}: {
+  index: number;
+  totalItems: number;
+  currentIndex: number;
+}) {
+  const isActive = index === currentIndex;
+  return (
+    <span
+      key={index}
+      className={`inline-block w-6 h-3 rounded-full transition-all duration-200 
+        ${isActive ? 'bg-blue-500 scale-50' : 'bg-gray-300 scale-30'}`}
+      style={{boxShadow: isActive ? '0 0 0 2px #3b82f6' : undefined}}
+    />
+  );
+}
+
 /**
- * A carousel which rotates between a set of text options
+ * Carousel navigation logic
+ * @param itemsLength Total number of items in the carousel
+ * @param scrollOnHover If true, can scroll through the carousel items on hover
+ * @param rotateDelayMS Delay between rotations
  */
-function SkillsCarousel({items = [], rotateDelayMS = 2000, hoverDelayMS = 100, scrollOnHover = false}: SkillsCarouselProps) {
+function useCarouselNavigation(itemsLength: number, scrollOnHover: boolean, rotateDelayMS: number) {
   const [index, setIndex] = useState(0);
+  const [lastDirection, setLastDirection] = useState<"forward" | "backward">("forward");
   const [hovered, setHovered] = useState(false);
   const [hoverTimeoutId, setHoverTimeoutId] = useState<number | null>(null);
-
   const [rotateTimeoutId, setRotateTimeoutId] = useState<number | null>(null);
   const [rotateTimeoutStarted, setRotateTimeoutStarted] = useState<number | null>(null);
-  const [remainingTime, setRemainingTime] = useState<number | undefined>(rotateDelayMS);
-  const containerRef = useRef(null);
-  const [lastDirection, setLastDirection] = useState<"forward" | "backward">("forward");
+  const [remainingTime, setRemainingTime] = useState<number>(rotateDelayMS);
 
-  // Prevent default scrolling when mousing over the carousel
-  useEffect(() => {
-    if (!scrollOnHover) return;
-    const el: HTMLElement | null = containerRef.current as HTMLElement | null;
-    if (!el) return;
-    const handler = (e: WheelEvent) => e.preventDefault();
-    el.addEventListener('wheel', handler, { passive: false });
-    return () => el.removeEventListener('wheel', handler);
-  }, [containerRef, scrollOnHover]);
+  const updateIndex = (delta: number) => {
+    setLastDirection(delta > 0 ? "forward" : "backward");
+    setIndex((prev) => (prev + delta + itemsLength) % itemsLength);
+  };
 
-  useEffect(() => {
-    // Rotate the index
+  const handleRotation = useCallback(() => {
     if (hovered) return;
 
-    // create the timeout for rotation
     const timeoutId = setTimeout(() => {
-      setIndex((prev) => {
-        setLastDirection("forward");
-        return (prev + 1) % items.length;
-      });
-      // on rotate reset the remaining time and use this as the start time of the next rotate
+      updateIndex(1);
       setRemainingTime(rotateDelayMS);
       setRotateTimeoutStarted(Date.now());
     }, remainingTime);
 
     setRotateTimeoutStarted(Date.now());
+    // @ts-ignore
     setRotateTimeoutId(timeoutId);
     return () => clearTimeout(timeoutId);
-  }, [index, rotateDelayMS, items.length, hovered, remainingTime]);
+  }, [hovered, remainingTime, rotateDelayMS, itemsLength]);
 
-  function onHover() {
+  useEffect(() => handleRotation(), [handleRotation]);
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (!hovered) return;
+    updateIndex(e.deltaY > 0 ? 1 : -1);
+  };
+
+  const handleHover = (hoverDelayMS: number) => {
     if (!scrollOnHover) return;
-    // timeout for the pips to appear when hovered
     const timeout = setTimeout(() => {
-      // remember the rotate delay so we can resume after
       if (rotateTimeoutId) {
-        // clear then store the remaining time
         clearTimeout(rotateTimeoutId);
         setRotateTimeoutId(null);
-        setRemainingTime((prev) => (prev && rotateTimeoutStarted) ? prev - (Date.now() - rotateTimeoutStarted): rotateDelayMS);
+        setRemainingTime((prev) =>
+                           rotateTimeoutStarted ? prev - (Date.now() - rotateTimeoutStarted) : rotateDelayMS
+        );
       }
       setHovered(true);
-    }, hoverDelayMS); // 500ms delay
+    }, hoverDelayMS);
+    // @ts-ignore
     setHoverTimeoutId(timeout);
-  }
+  };
 
-  function onLeave() {
+  const handleLeave = () => {
     if (hoverTimeoutId) {
       clearTimeout(hoverTimeoutId);
     }
     setHovered(false);
-  }
+  };
 
-  // Handle scroll wheel to change index
-  function onWheel(e: React.WheelEvent) {
-    if (!hovered) return;
-    if (e.deltaY > 0) {
-      setLastDirection("forward");
-      setIndex((prev) => (prev + 1) % items.length);
-    } else if (e.deltaY < 0) {
-      setLastDirection("backward");
-      setIndex((prev) => (prev - 1 + items.length) % items.length);
-    }
-  }
+  return {
+    index,
+    lastDirection,
+    hovered,
+    handleWheel,
+    handleHover,
+    handleLeave
+  };
+}
 
-  return (<motion.div
-      ref = {containerRef}
-      className="relative w-full h-30 overflow-hidden flex items-center justify-center"
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      onWheel={onWheel}
-      animate={{width: "100%"}}
-      transition={{type: "spring", stiffness: 10, damping: 60}}
-      style={{cursor: "pointer"}}
+const containerStyles = {
+  className: "relative w-full h-30 overflow-hidden flex items-center justify-center",
+  animate: {width: "100%"},
+  transition: {type: "spring", stiffness: 10, damping: 60},
+  style: {cursor: "pointer"}
+} as const;
+
+const itemAnimationProps = (lastDirection: "forward" | "backward") => ({
+  initial: {
+    x: lastDirection === "forward" ? "-100%" : "100%",
+    opacity: 0
+  },
+  animate: {x: "0%", opacity: 1},
+  exit: {
+    x: lastDirection === "forward" ? "100%" : "-100%",
+    opacity: 0
+  },
+  transition: {
+    x: {type: "spring", stiffness: 400, damping: 50}
+  }
+});
+
+function SkillsCarousel({
+                          items = [],
+                          rotateDelayMS = 2000,
+                          hoverDelayMS = 100,
+                          scrollOnHover = true
+                        }: SkillsCarouselProps) {
+  const containerRef = useRef(null);
+  const {
+    index,
+    lastDirection,
+    hovered,
+    handleWheel,
+    handleHover,
+    handleLeave
+  } = useCarouselNavigation(items.length, scrollOnHover, rotateDelayMS);
+
+  useEffect(() => {
+    if (!scrollOnHover) return;
+    const el = containerRef.current as HTMLElement | null;
+    if (!el) return;
+
+    const handler = (e: WheelEvent) => e.preventDefault();
+    el.addEventListener('wheel', handler, {passive: false});
+    return () => el.removeEventListener('wheel', handler);
+  }, [scrollOnHover]);
+
+  return (
+    <motion.div
+      ref={containerRef}
+      {...containerStyles}
+      onMouseEnter={() => handleHover(hoverDelayMS)}
+      onMouseLeave={handleLeave}
+      onWheel={handleWheel}
     >
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
           className="absolute text-2xl font-bold"
-          initial={{
-            x: lastDirection === "forward" ? "-100%" : "100%",
-            opacity: 0
-          }}
-          animate={{x: "0%", opacity: 1}}
-          exit={{
-            x: lastDirection === "forward" ? "100%" : "-100%",
-            opacity: 0
-          }}
-          transition={{
-            x: {
-              type: "spring", stiffness: 400, damping: 50,
-            },
-          }}
+          {...itemAnimationProps(lastDirection)}
         >
           {items[index]}
         </motion.div>
       </AnimatePresence>
-      {/* Pips at the bottom */}
-      {hovered && (<div className="absolute bottom-2 left-0 w-full flex justify-center gap-1">
-          {items.map((_, i) => (<span
+
+      {hovered && (
+        <div className="absolute bottom-2 left-0 w-full flex justify-center gap-1">
+          {items.map((_, i) => (
+            <CarouselIndicator
               key={i}
-              className={`inline-block w-6 h-3 rounded-full transition-all duration-200 ${i === index ? 'bg-blue-500' +
-                ' scale-50' : 'bg-gray-300 scale-30'}`}
-              style={{boxShadow: i === index ? '0 0 0 2px #3b82f6' : undefined}}
-            />))}
-        </div>)}
-    </motion.div>);
+              index={i}
+              totalItems={items.length}
+              currentIndex={index}
+            />
+          ))}
+        </div>
+      )}
+    </motion.div>
+  );
 }
 
 export default SkillsCarousel;
