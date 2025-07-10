@@ -6,6 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   integrations: [react(), tailwindcss()],
   output: 'static',
+  base: '/fallback',
+  outDir: 'dist/fallback',
 
   vite: {
     plugins: [tailwindcss()]

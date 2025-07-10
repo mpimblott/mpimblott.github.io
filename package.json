@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist/final",
     "dev": "vite",
-    "build": "vite build",
+    "build:vite": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "astro_dev": "astro dev"
+    "dev:astro": "astro dev",
+    "build:astro": "astro build",
+    "merge-builds": "node merge_builds.js",
+    "build": "npm run build:vite && npm run build:astro && npm run merge-builds"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
