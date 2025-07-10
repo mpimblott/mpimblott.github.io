@@ -52,6 +52,7 @@ function useCarouselNavigation(itemsLength: number, scrollOnHover: boolean, rota
       updateIndex(1);
       setRemainingTime(rotateDelayMS);
       setRotateTimeoutStarted(Date.now());
+      handleRotation(); // Add this line to trigger the next rotation
     }, remainingTime);
 
     setRotateTimeoutStarted(Date.now());
@@ -60,7 +61,10 @@ function useCarouselNavigation(itemsLength: number, scrollOnHover: boolean, rota
     return () => clearTimeout(timeoutId);
   }, [hovered, remainingTime, rotateDelayMS, itemsLength]);
 
-  useEffect(() => handleRotation(), [handleRotation]);
+  useEffect(() => {
+    const cleanup = handleRotation();
+    return () => cleanup && cleanup();
+  }, [handleRotation]);
 
   const handleWheel = (e: React.WheelEvent) => {
     if (!hovered) return;
@@ -126,7 +130,7 @@ function SkillsCarousel({
                           items = [],
                           rotateDelayMS = 2000,
                           hoverDelayMS = 100,
-                          scrollOnHover = true
+                          scrollOnHover = false
                         }: SkillsCarouselProps) {
   const containerRef = useRef(null);
   const {
