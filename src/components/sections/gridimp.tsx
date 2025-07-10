@@ -19,9 +19,9 @@ function Gridimp() {
     description: "We aimed to understand how battery control systems reshape the demand" + " profile to reduce energy costs and carbon emissions, accounting for inaccurate or missing data and " + " a variety of possible site configurations. I worked to implement the core algorithm and create the backend" + " Java service, integrating with the company's existing data processing pipelines. The project was deployed to" + " AWS and now runs daily giving customers a better understanding of their energy consumption.",
     technologies: [Java, Aws, Python],
     children: <BarChart animate={hasMounted}
-      values={[{value: 0.3, colour: '#FF69B4', label: 'Solar Value'}, {
-        value: 1, colour: '#00CED1', label: 'Flexibility Value'
-      }, {value: 0.6, colour: '#DDA0DD', label: 'Arbitrage Value'}]}/>
+                        values={[{value: 0.3, colour: '#FF69B4', label: 'Solar Value'}, {
+                          value: 1, colour: '#00CED1', label: 'Flexibility Value'
+                        }, {value: 0.6, colour: '#DDA0DD', label: 'Arbitrage Value'}]}/>
   }, {
     title: "Reinforcement Learning Battery Control",
     description: "I researched and prototyped a novel battery control algorithm applying deep reinforcement. I evaluated a range of approaches including value function approximation " + "methods and transformer-based models to find the right approach balancing performance, flexibility and cost. We used MLFlow " + "to manage the lifecycle of our models and created a pipeline to prepare models for site deployments. I also spent some time " + "porting the existing algorithms from TensorFlow to PyTorch to enable access to new algorithms.",
@@ -56,11 +56,11 @@ function Gridimp() {
   </article>;
 
   return (<><Experience_section title={"Gridimp"} subtitle={"Software Developer"} subsubtitle={"Aug. 2024 - Present"}
-                                children={articleContent}/>
+                                children={articleContent} animate={hasMounted}/>
     <div>
       <h1 className="text-2xl mb-6"><u>Projects</u></h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
-        {projects.map((project, index) => (<ProjectCard key={project.title} project={project} index={index}
+        {projects.map((project, index) => (<ProjectCard key={project.title} project={project}
                                                         children={project.children} animate={hasMounted}/>))}
       </div>
     </div>

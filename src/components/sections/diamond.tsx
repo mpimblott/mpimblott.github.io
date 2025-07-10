@@ -68,11 +68,11 @@ function Diamond() {
   return <>
     <Experience_section title={"Diamond Light Source"} subtitle={"Placement Research Software Engineer"}
                         subsubtitle={"2022-2023"}
-                        children={articleContent}/>
+                        children={articleContent} animate={hasMounted}/>
     <h1 className="text-2xl mb-6"><u>Projects</u></h1>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 w-full">
       {projects.map((project, index) => (
-        <ProjectCard key={project.title} project={project} index={index} children={project.children}
+        <ProjectCard key={project.title} project={project} children={project.children}
                      animate={hasMounted} />))}
     </div>
   </>;

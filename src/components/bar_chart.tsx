@@ -10,6 +10,7 @@ interface BarChartValue {
 /**
  * Display a mock bar chart with an entry animation
  * @param values The height of the bars relative to the container
+ * @param animate True to animate the chart upon entering view.
  */
 function BarChart({values, animate = true}: { values: BarChartValue[], animate?: boolean }) {
   return (<div className="flex justify-center h-30">

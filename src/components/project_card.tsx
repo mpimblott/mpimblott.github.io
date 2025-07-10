@@ -102,8 +102,8 @@ export interface Project {
  * @param children Content for the child position.
  * @param animate If true an animation is applied when coming into view
  */
-function ProjectCard({project, index, children, animate = true}: {
-  project: Project; index: number, children?: React.ReactNode, animate?: boolean;
+function ProjectCard({project, children, animate = true}: {
+  project: Project; children?: React.ReactNode, animate?: boolean;
 }) {
   // fade in the card when it first comes into view
 

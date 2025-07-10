@@ -1,7 +1,7 @@
 import React from 'react';
-import { CONTACT_EMAIL, CV_PATH, GITHUB_LINK, LINKEDIN_LINK } from "../../config";
+import { CV_PATH, GITHUB_LINK, LINKEDIN_LINK } from "../../config";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { MdDownload, MdEmail } from "react-icons/md";
+import { MdDownload } from "react-icons/md";
 
 /**
  * Socials links
